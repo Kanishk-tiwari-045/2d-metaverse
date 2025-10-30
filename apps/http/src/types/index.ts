@@ -1,9 +1,9 @@
-import z from "zod";
+import z from 'zod';
 
 export const SignupSchema = z.object({
   username: z.string(),
   password: z.string(),
-  type: z.enum(["user", "admin"]),
+  type: z.enum(['user', 'admin']),
   avatarId: z.string().optional(),
 });
 
@@ -87,7 +87,7 @@ export const UpdateAvatarInfoSchema = z.object({
 declare global {
   namespace Express {
     export interface Request {
-      role?: "admin" | "user";
+      role?: 'admin' | 'user';
       userId?: string;
     }
   }

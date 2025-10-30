@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { UpdateMetadataSchema, UpdatePasswordSchema, UpdateAvatarInfoSchema } from '../../types';
+import {
+  UpdateMetadataSchema,
+  UpdatePasswordSchema,
+  UpdateAvatarInfoSchema,
+} from '../../types';
 import client from '@repo/db/client';
 import { userMiddleware } from '../../middleware/user';
 import { hash, compare } from '../../scrypt';
@@ -58,14 +62,14 @@ userRouter.get('/metadata/bulk', async (req, res) => {
 });
 
 // Get user profile data
-userRouter.get("/profile", userMiddleware, async (req, res) => {
+userRouter.get('/profile', userMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.userId!);
-    
+
     // Calculate date 7 days ago
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    
+
     const user = await client.user.findUnique({
       where: { id: userId },
       select: {
@@ -93,7 +97,7 @@ userRouter.get("/profile", userMiddleware, async (req, res) => {
     });
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
 
@@ -102,9 +106,9 @@ userRouter.get("/profile", userMiddleware, async (req, res) => {
       where: {
         userId: userId,
         date: {
-          gte: sevenDaysAgo
-        }
-      }
+          gte: sevenDaysAgo,
+        },
+      },
     });
 
     res.json({
@@ -123,29 +127,29 @@ userRouter.get("/profile", userMiddleware, async (req, res) => {
       },
     });
   } catch (e) {
-    console.error("Error fetching profile:", e);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error fetching profile:', e);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // Update password
-userRouter.put("/password", userMiddleware, async (req, res) => {
+userRouter.put('/password', userMiddleware, async (req, res) => {
   const parsedData = UpdatePasswordSchema.safeParse(req.body);
   if (!parsedData.success) {
-    res.status(400).json({ message: "Validation failed" });
+    res.status(400).json({ message: 'Validation failed' });
     return;
   }
 
   try {
     const userId = parseInt(req.userId!);
-    
+
     const user = await client.user.findUnique({
       where: { id: userId },
       select: { password: true },
     });
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
 
@@ -156,7 +160,7 @@ userRouter.put("/password", userMiddleware, async (req, res) => {
     );
 
     if (!isValidPassword) {
-      res.status(401).json({ message: "Current password is incorrect" });
+      res.status(401).json({ message: 'Current password is incorrect' });
       return;
     }
 
@@ -167,18 +171,18 @@ userRouter.put("/password", userMiddleware, async (req, res) => {
       data: { password: hashedPassword },
     });
 
-    res.json({ message: "Password updated successfully" });
+    res.json({ message: 'Password updated successfully' });
   } catch (e) {
-    console.error("Error updating password:", e);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error updating password:', e);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // Update avatar info
-userRouter.put("/avatar-info", userMiddleware, async (req, res) => {
+userRouter.put('/avatar-info', userMiddleware, async (req, res) => {
   const parsedData = UpdateAvatarInfoSchema.safeParse(req.body);
   if (!parsedData.success) {
-    res.status(400).json({ message: "Validation failed" });
+    res.status(400).json({ message: 'Validation failed' });
     return;
   }
 
@@ -198,69 +202,69 @@ userRouter.put("/avatar-info", userMiddleware, async (req, res) => {
       data: updateData,
     });
 
-    res.json({ message: "Avatar info updated successfully" });
+    res.json({ message: 'Avatar info updated successfully' });
   } catch (e) {
-    console.error("Error updating avatar info:", e);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error updating avatar info:', e);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // Delete account
-userRouter.delete("/account", userMiddleware, async (req, res) => {
+userRouter.delete('/account', userMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.userId!);
-    
+
     await client.user.delete({
       where: { id: userId },
     });
 
-    res.json({ message: "Account deleted successfully" });
+    res.json({ message: 'Account deleted successfully' });
   } catch (e) {
-    console.error("Error deleting account:", e);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error deleting account:', e);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // Track activity (called when user visits/opens the app)
-userRouter.post("/activity", userMiddleware, async (req, res) => {
+userRouter.post('/activity', userMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.userId!);
-    
+
     // Get today's date (midnight)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     // Upsert activity log - creates new entry if doesn't exist, does nothing if exists
     await client.activityLog.upsert({
       where: {
         userId_date: {
           userId: userId,
-          date: today
-        }
+          date: today,
+        },
       },
       update: {},
       create: {
         userId: userId,
-        date: today
-      }
+        date: today,
+      },
     });
 
-    res.json({ message: "Activity tracked" });
+    res.json({ message: 'Activity tracked' });
   } catch (e) {
-    console.error("Error tracking activity:", e);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error tracking activity:', e);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // Get maps that user has recently joined
 userRouter.get('/joined-maps', userMiddleware, async (req, res) => {
   try {
-    const joinedMaps = await client.userMapVisit.findMany({
+    const joinedMaps = await client.user_map_visits.findMany({
       where: {
-        userId: parseInt(req.userId!),
+        user_id: parseInt(req.userId!),
       },
       include: {
-        map: {
+        maps: {
           include: {
             creator: {
               select: {
@@ -271,22 +275,22 @@ userRouter.get('/joined-maps', userMiddleware, async (req, res) => {
         },
       },
       orderBy: {
-        visitedAt: 'desc',
+        visited_at: 'desc',
       },
       take: 20, // Limit to 20 most recent
     });
 
     res.json({
       maps: joinedMaps.map((visit) => ({
-        id: visit.map.id,
-        name: visit.map.name,
-        width: visit.map.width,
-        height: visit.map.height,
-        dimensions: `${visit.map.width}x${visit.map.height}`,
-        ownerId: visit.map.creatorId,
-        owner: visit.map.creator.username,
-        isOwner: visit.map.creatorId === parseInt(req.userId!),
-        lastVisited: visit.visitedAt,
+        id: visit.maps.id,
+        name: visit.maps.name,
+        width: visit.maps.width,
+        height: visit.maps.height,
+        dimensions: `${visit.maps.width}x${visit.maps.height}`,
+        ownerId: visit.maps.creatorId,
+        owner: visit.maps.creator.username,
+        isOwner: visit.maps.creatorId === parseInt(req.userId!),
+        lastVisited: visit.visited_at,
       })),
     });
   } catch (error) {
@@ -306,19 +310,19 @@ userRouter.post('/visit-map', userMiddleware, async (req, res) => {
     }
 
     // Use upsert to update visit time if already exists
-    await client.userMapVisit.upsert({
+    await client.user_map_visits.upsert({
       where: {
-        userId_mapId: {
-          userId: parseInt(req.userId!),
-          mapId: parseInt(mapId),
+        user_id_map_id: {
+          user_id: parseInt(req.userId!),
+          map_id: parseInt(mapId),
         },
       },
       update: {
-        visitedAt: new Date(),
+        visited_at: new Date(),
       },
       create: {
-        userId: parseInt(req.userId!),
-        mapId: parseInt(mapId),
+        user_id: parseInt(req.userId!),
+        map_id: parseInt(mapId),
       },
     });
 
@@ -507,10 +511,10 @@ userRouter.post('/copy-template', userMiddleware, async (req, res) => {
     });
 
     // Automatically record a visit so the map shows in user's recents
-    await client.userMapVisit.create({
+    await client.user_map_visits.create({
       data: {
-        userId: parseInt(req.userId!),
-        mapId: copiedMap.id,
+        user_id: parseInt(req.userId!),
+        map_id: copiedMap.id,
       },
     });
 
