@@ -36,23 +36,18 @@ model Element {
 }
 
 model Map {
-  id          Int            @id @default(autoincrement())
-  name        String         @db.VarChar(255)
-  width       Int
-  height      Int
-  bgImg       String?        @map("bg_img") // Background image URL
-  tilemapUrl  String?        @map("tilemap_url") // Tiled JSON map file URL
-  creatorId   Int            @map("creator_id")
-  isTemplate  Boolean        @default(false) @map("is_template")
-  accessCode  String?        @unique @map("access_code")
-  templateId  Int?           @map("template_id")
-  creator     User           @relation("MapCreator", fields: [creatorId], references: [id], onDelete: Cascade)
-  template    Map?           @relation("MapTemplate", fields: [templateId], references: [id], onDelete: SetNull)
-  childMaps   Map[]          @relation("MapTemplate")
-  mapElements MapElement[]
-  mapSpaces   MapSpace[]
-  messages    Message[]
-  userVisits  user_map_visits[]
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  width           Int
+  height          Int
+  bgImg           String?           @map("bg_img")        // Background image URL
+  tilemapUrl      String?           @map("tilemap_url")   // Tiled JSON map file URL
+  creatorId       Int               @map("creator_id")
+  mapElements     MapElement[]
+  mapSpaces       MapSpace[]
+  creator         User              @relation("MapCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  messages        Message[]
+  user_map_visits user_map_visits[]
 
   @@map("maps")
 }
