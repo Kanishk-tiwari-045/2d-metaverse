@@ -1965,6 +1965,7 @@ export namespace Prisma {
   export type MapCountOutputType = {
     mapElements: number;
     mapSpaces: number;
+    childMaps: number;
     messages: number;
     user_map_visits: number;
   };
@@ -1974,6 +1975,7 @@ export namespace Prisma {
   > = {
     mapElements?: boolean | MapCountOutputTypeCountMapElementsArgs;
     mapSpaces?: boolean | MapCountOutputTypeCountMapSpacesArgs;
+    childMaps?: boolean | MapCountOutputTypeCountChildMapsArgs;
     messages?: boolean | MapCountOutputTypeCountMessagesArgs;
     user_map_visits?: boolean | MapCountOutputTypeCountUser_map_visitsArgs;
   };
@@ -2007,6 +2009,15 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: MapSpaceWhereInput;
+  };
+
+  /**
+   * MapCountOutputType without action
+   */
+  export type MapCountOutputTypeCountChildMapsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: MapWhereInput;
   };
 
   /**
@@ -5038,6 +5049,7 @@ export namespace Prisma {
     width: number | null;
     height: number | null;
     creatorId: number | null;
+    templateId: number | null;
   };
 
   export type MapSumAggregateOutputType = {
@@ -5045,6 +5057,7 @@ export namespace Prisma {
     width: number | null;
     height: number | null;
     creatorId: number | null;
+    templateId: number | null;
   };
 
   export type MapMinAggregateOutputType = {
@@ -5055,6 +5068,9 @@ export namespace Prisma {
     bgImg: string | null;
     tilemapUrl: string | null;
     creatorId: number | null;
+    isTemplate: boolean | null;
+    accessCode: string | null;
+    templateId: number | null;
   };
 
   export type MapMaxAggregateOutputType = {
@@ -5065,6 +5081,9 @@ export namespace Prisma {
     bgImg: string | null;
     tilemapUrl: string | null;
     creatorId: number | null;
+    isTemplate: boolean | null;
+    accessCode: string | null;
+    templateId: number | null;
   };
 
   export type MapCountAggregateOutputType = {
@@ -5075,6 +5094,9 @@ export namespace Prisma {
     bgImg: number;
     tilemapUrl: number;
     creatorId: number;
+    isTemplate: number;
+    accessCode: number;
+    templateId: number;
     _all: number;
   };
 
@@ -5083,6 +5105,7 @@ export namespace Prisma {
     width?: true;
     height?: true;
     creatorId?: true;
+    templateId?: true;
   };
 
   export type MapSumAggregateInputType = {
@@ -5090,6 +5113,7 @@ export namespace Prisma {
     width?: true;
     height?: true;
     creatorId?: true;
+    templateId?: true;
   };
 
   export type MapMinAggregateInputType = {
@@ -5100,6 +5124,9 @@ export namespace Prisma {
     bgImg?: true;
     tilemapUrl?: true;
     creatorId?: true;
+    isTemplate?: true;
+    accessCode?: true;
+    templateId?: true;
   };
 
   export type MapMaxAggregateInputType = {
@@ -5110,6 +5137,9 @@ export namespace Prisma {
     bgImg?: true;
     tilemapUrl?: true;
     creatorId?: true;
+    isTemplate?: true;
+    accessCode?: true;
+    templateId?: true;
   };
 
   export type MapCountAggregateInputType = {
@@ -5120,6 +5150,9 @@ export namespace Prisma {
     bgImg?: true;
     tilemapUrl?: true;
     creatorId?: true;
+    isTemplate?: true;
+    accessCode?: true;
+    templateId?: true;
     _all?: true;
   };
 
@@ -5218,6 +5251,9 @@ export namespace Prisma {
     bgImg: string | null;
     tilemapUrl: string | null;
     creatorId: number;
+    isTemplate: boolean;
+    accessCode: string | null;
+    templateId: number | null;
     _count: MapCountAggregateOutputType | null;
     _avg: MapAvgAggregateOutputType | null;
     _sum: MapSumAggregateOutputType | null;
@@ -5248,9 +5284,14 @@ export namespace Prisma {
       bgImg?: boolean;
       tilemapUrl?: boolean;
       creatorId?: boolean;
+      isTemplate?: boolean;
+      accessCode?: boolean;
+      templateId?: boolean;
       mapElements?: boolean | Map$mapElementsArgs<ExtArgs>;
       mapSpaces?: boolean | Map$mapSpacesArgs<ExtArgs>;
       creator?: boolean | UserDefaultArgs<ExtArgs>;
+      template?: boolean | Map$templateArgs<ExtArgs>;
+      childMaps?: boolean | Map$childMapsArgs<ExtArgs>;
       messages?: boolean | Map$messagesArgs<ExtArgs>;
       user_map_visits?: boolean | Map$user_map_visitsArgs<ExtArgs>;
       _count?: boolean | MapCountOutputTypeDefaultArgs<ExtArgs>;
@@ -5269,7 +5310,11 @@ export namespace Prisma {
       bgImg?: boolean;
       tilemapUrl?: boolean;
       creatorId?: boolean;
+      isTemplate?: boolean;
+      accessCode?: boolean;
+      templateId?: boolean;
       creator?: boolean | UserDefaultArgs<ExtArgs>;
+      template?: boolean | Map$templateArgs<ExtArgs>;
     },
     ExtArgs['result']['map']
   >;
@@ -5285,7 +5330,11 @@ export namespace Prisma {
       bgImg?: boolean;
       tilemapUrl?: boolean;
       creatorId?: boolean;
+      isTemplate?: boolean;
+      accessCode?: boolean;
+      templateId?: boolean;
       creator?: boolean | UserDefaultArgs<ExtArgs>;
+      template?: boolean | Map$templateArgs<ExtArgs>;
     },
     ExtArgs['result']['map']
   >;
@@ -5298,12 +5347,24 @@ export namespace Prisma {
     bgImg?: boolean;
     tilemapUrl?: boolean;
     creatorId?: boolean;
+    isTemplate?: boolean;
+    accessCode?: boolean;
+    templateId?: boolean;
   };
 
   export type MapOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetOmit<
-    'id' | 'name' | 'width' | 'height' | 'bgImg' | 'tilemapUrl' | 'creatorId',
+    | 'id'
+    | 'name'
+    | 'width'
+    | 'height'
+    | 'bgImg'
+    | 'tilemapUrl'
+    | 'creatorId'
+    | 'isTemplate'
+    | 'accessCode'
+    | 'templateId',
     ExtArgs['result']['map']
   >;
   export type MapInclude<
@@ -5312,6 +5373,8 @@ export namespace Prisma {
     mapElements?: boolean | Map$mapElementsArgs<ExtArgs>;
     mapSpaces?: boolean | Map$mapSpacesArgs<ExtArgs>;
     creator?: boolean | UserDefaultArgs<ExtArgs>;
+    template?: boolean | Map$templateArgs<ExtArgs>;
+    childMaps?: boolean | Map$childMapsArgs<ExtArgs>;
     messages?: boolean | Map$messagesArgs<ExtArgs>;
     user_map_visits?: boolean | Map$user_map_visitsArgs<ExtArgs>;
     _count?: boolean | MapCountOutputTypeDefaultArgs<ExtArgs>;
@@ -5320,11 +5383,13 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     creator?: boolean | UserDefaultArgs<ExtArgs>;
+    template?: boolean | Map$templateArgs<ExtArgs>;
   };
   export type MapIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     creator?: boolean | UserDefaultArgs<ExtArgs>;
+    template?: boolean | Map$templateArgs<ExtArgs>;
   };
 
   export type $MapPayload<
@@ -5335,6 +5400,8 @@ export namespace Prisma {
       mapElements: Prisma.$MapElementPayload<ExtArgs>[];
       mapSpaces: Prisma.$MapSpacePayload<ExtArgs>[];
       creator: Prisma.$UserPayload<ExtArgs>;
+      template: Prisma.$MapPayload<ExtArgs> | null;
+      childMaps: Prisma.$MapPayload<ExtArgs>[];
       messages: Prisma.$MessagePayload<ExtArgs>[];
       user_map_visits: Prisma.$user_map_visitsPayload<ExtArgs>[];
     };
@@ -5347,6 +5414,9 @@ export namespace Prisma {
         bgImg: string | null;
         tilemapUrl: string | null;
         creatorId: number;
+        isTemplate: boolean;
+        accessCode: string | null;
+        templateId: number | null;
       },
       ExtArgs['result']['map']
     >;
@@ -5928,6 +5998,30 @@ export namespace Prisma {
       ExtArgs,
       GlobalOmitOptions
     >;
+    template<T extends Map$templateArgs<ExtArgs> = {}>(
+      args?: Subset<T, Map$templateArgs<ExtArgs>>
+    ): Prisma__MapClient<
+      $Result.GetResult<
+        Prisma.$MapPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    childMaps<T extends Map$childMapsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Map$childMapsArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$MapPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
     messages<T extends Map$messagesArgs<ExtArgs> = {}>(
       args?: Subset<T, Map$messagesArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
@@ -5997,6 +6091,9 @@ export namespace Prisma {
     readonly bgImg: FieldRef<'Map', 'String'>;
     readonly tilemapUrl: FieldRef<'Map', 'String'>;
     readonly creatorId: FieldRef<'Map', 'Int'>;
+    readonly isTemplate: FieldRef<'Map', 'Boolean'>;
+    readonly accessCode: FieldRef<'Map', 'String'>;
+    readonly templateId: FieldRef<'Map', 'Int'>;
   }
 
   // Custom InputTypes
@@ -6473,6 +6570,53 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: MapSpaceScalarFieldEnum | MapSpaceScalarFieldEnum[];
+  };
+
+  /**
+   * Map.template
+   */
+  export type Map$templateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Map
+     */
+    select?: MapSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Map
+     */
+    omit?: MapOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MapInclude<ExtArgs> | null;
+    where?: MapWhereInput;
+  };
+
+  /**
+   * Map.childMaps
+   */
+  export type Map$childMapsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Map
+     */
+    select?: MapSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Map
+     */
+    omit?: MapOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MapInclude<ExtArgs> | null;
+    where?: MapWhereInput;
+    orderBy?: MapOrderByWithRelationInput | MapOrderByWithRelationInput[];
+    cursor?: MapWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: MapScalarFieldEnum | MapScalarFieldEnum[];
   };
 
   /**
@@ -18100,6 +18244,9 @@ export namespace Prisma {
     bgImg: 'bgImg';
     tilemapUrl: 'tilemapUrl';
     creatorId: 'creatorId';
+    isTemplate: 'isTemplate';
+    accessCode: 'accessCode';
+    templateId: 'templateId';
   };
 
   export type MapScalarFieldEnum =
@@ -18473,9 +18620,14 @@ export namespace Prisma {
     bgImg?: StringNullableFilter<'Map'> | string | null;
     tilemapUrl?: StringNullableFilter<'Map'> | string | null;
     creatorId?: IntFilter<'Map'> | number;
+    isTemplate?: BoolFilter<'Map'> | boolean;
+    accessCode?: StringNullableFilter<'Map'> | string | null;
+    templateId?: IntNullableFilter<'Map'> | number | null;
     mapElements?: MapElementListRelationFilter;
     mapSpaces?: MapSpaceListRelationFilter;
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>;
+    template?: XOR<MapNullableScalarRelationFilter, MapWhereInput> | null;
+    childMaps?: MapListRelationFilter;
     messages?: MessageListRelationFilter;
     user_map_visits?: User_map_visitsListRelationFilter;
   };
@@ -18488,9 +18640,14 @@ export namespace Prisma {
     bgImg?: SortOrderInput | SortOrder;
     tilemapUrl?: SortOrderInput | SortOrder;
     creatorId?: SortOrder;
+    isTemplate?: SortOrder;
+    accessCode?: SortOrderInput | SortOrder;
+    templateId?: SortOrderInput | SortOrder;
     mapElements?: MapElementOrderByRelationAggregateInput;
     mapSpaces?: MapSpaceOrderByRelationAggregateInput;
     creator?: UserOrderByWithRelationInput;
+    template?: MapOrderByWithRelationInput;
+    childMaps?: MapOrderByRelationAggregateInput;
     messages?: MessageOrderByRelationAggregateInput;
     user_map_visits?: user_map_visitsOrderByRelationAggregateInput;
   };
@@ -18498,6 +18655,7 @@ export namespace Prisma {
   export type MapWhereUniqueInput = Prisma.AtLeast<
     {
       id?: number;
+      accessCode?: string;
       AND?: MapWhereInput | MapWhereInput[];
       OR?: MapWhereInput[];
       NOT?: MapWhereInput | MapWhereInput[];
@@ -18507,13 +18665,17 @@ export namespace Prisma {
       bgImg?: StringNullableFilter<'Map'> | string | null;
       tilemapUrl?: StringNullableFilter<'Map'> | string | null;
       creatorId?: IntFilter<'Map'> | number;
+      isTemplate?: BoolFilter<'Map'> | boolean;
+      templateId?: IntNullableFilter<'Map'> | number | null;
       mapElements?: MapElementListRelationFilter;
       mapSpaces?: MapSpaceListRelationFilter;
       creator?: XOR<UserScalarRelationFilter, UserWhereInput>;
+      template?: XOR<MapNullableScalarRelationFilter, MapWhereInput> | null;
+      childMaps?: MapListRelationFilter;
       messages?: MessageListRelationFilter;
       user_map_visits?: User_map_visitsListRelationFilter;
     },
-    'id'
+    'id' | 'accessCode'
   >;
 
   export type MapOrderByWithAggregationInput = {
@@ -18524,6 +18686,9 @@ export namespace Prisma {
     bgImg?: SortOrderInput | SortOrder;
     tilemapUrl?: SortOrderInput | SortOrder;
     creatorId?: SortOrder;
+    isTemplate?: SortOrder;
+    accessCode?: SortOrderInput | SortOrder;
+    templateId?: SortOrderInput | SortOrder;
     _count?: MapCountOrderByAggregateInput;
     _avg?: MapAvgOrderByAggregateInput;
     _max?: MapMaxOrderByAggregateInput;
@@ -18546,6 +18711,9 @@ export namespace Prisma {
     bgImg?: StringNullableWithAggregatesFilter<'Map'> | string | null;
     tilemapUrl?: StringNullableWithAggregatesFilter<'Map'> | string | null;
     creatorId?: IntWithAggregatesFilter<'Map'> | number;
+    isTemplate?: BoolWithAggregatesFilter<'Map'> | boolean;
+    accessCode?: StringNullableWithAggregatesFilter<'Map'> | string | null;
+    templateId?: IntNullableWithAggregatesFilter<'Map'> | number | null;
   };
 
   export type UserWhereInput = {
@@ -19279,9 +19447,13 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
     mapElements?: MapElementCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceCreateNestedManyWithoutMapInput;
     creator: UserCreateNestedOneWithoutCreatedMapsInput;
+    template?: MapCreateNestedOneWithoutChildMapsInput;
+    childMaps?: MapCreateNestedManyWithoutTemplateInput;
     messages?: MessageCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsCreateNestedManyWithoutMapsInput;
   };
@@ -19294,8 +19466,12 @@ export namespace Prisma {
     bgImg?: string | null;
     tilemapUrl?: string | null;
     creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
     mapElements?: MapElementUncheckedCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceUncheckedCreateNestedManyWithoutMapInput;
+    childMaps?: MapUncheckedCreateNestedManyWithoutTemplateInput;
     messages?: MessageUncheckedCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsUncheckedCreateNestedManyWithoutMapsInput;
   };
@@ -19306,9 +19482,13 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
     mapElements?: MapElementUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUpdateManyWithoutMapNestedInput;
     creator?: UserUpdateOneRequiredWithoutCreatedMapsNestedInput;
+    template?: MapUpdateOneWithoutChildMapsNestedInput;
+    childMaps?: MapUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUpdateManyWithoutMapsNestedInput;
   };
@@ -19321,8 +19501,12 @@ export namespace Prisma {
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
     creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
     mapElements?: MapElementUncheckedUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUncheckedUpdateManyWithoutMapNestedInput;
+    childMaps?: MapUncheckedUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutMapsNestedInput;
   };
@@ -19335,6 +19519,9 @@ export namespace Prisma {
     bgImg?: string | null;
     tilemapUrl?: string | null;
     creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
   };
 
   export type MapUpdateManyMutationInput = {
@@ -19343,6 +19530,8 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
   };
 
   export type MapUncheckedUpdateManyInput = {
@@ -19353,6 +19542,9 @@ export namespace Prisma {
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
     creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
   };
 
   export type UserCreateInput = {
@@ -20083,10 +20275,32 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>;
   };
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type MapSpaceListRelationFilter = {
     every?: MapSpaceWhereInput;
     some?: MapSpaceWhereInput;
     none?: MapSpaceWhereInput;
+  };
+
+  export type MapNullableScalarRelationFilter = {
+    is?: MapWhereInput | null;
+    isNot?: MapWhereInput | null;
+  };
+
+  export type MapListRelationFilter = {
+    every?: MapWhereInput;
+    some?: MapWhereInput;
+    none?: MapWhereInput;
   };
 
   export type MessageListRelationFilter = {
@@ -20102,6 +20316,10 @@ export namespace Prisma {
   };
 
   export type MapSpaceOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type MapOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -20121,6 +20339,9 @@ export namespace Prisma {
     bgImg?: SortOrder;
     tilemapUrl?: SortOrder;
     creatorId?: SortOrder;
+    isTemplate?: SortOrder;
+    accessCode?: SortOrder;
+    templateId?: SortOrder;
   };
 
   export type MapAvgOrderByAggregateInput = {
@@ -20128,6 +20349,7 @@ export namespace Prisma {
     width?: SortOrder;
     height?: SortOrder;
     creatorId?: SortOrder;
+    templateId?: SortOrder;
   };
 
   export type MapMaxOrderByAggregateInput = {
@@ -20138,6 +20360,9 @@ export namespace Prisma {
     bgImg?: SortOrder;
     tilemapUrl?: SortOrder;
     creatorId?: SortOrder;
+    isTemplate?: SortOrder;
+    accessCode?: SortOrder;
+    templateId?: SortOrder;
   };
 
   export type MapMinOrderByAggregateInput = {
@@ -20148,6 +20373,9 @@ export namespace Prisma {
     bgImg?: SortOrder;
     tilemapUrl?: SortOrder;
     creatorId?: SortOrder;
+    isTemplate?: SortOrder;
+    accessCode?: SortOrder;
+    templateId?: SortOrder;
   };
 
   export type MapSumOrderByAggregateInput = {
@@ -20155,9 +20383,10 @@ export namespace Prisma {
     width?: SortOrder;
     height?: SortOrder;
     creatorId?: SortOrder;
+    templateId?: SortOrder;
   };
 
-  export type IntNullableFilter<$PrismaModel = never> = {
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
@@ -20165,7 +20394,12 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>;
     gt?: number | IntFieldRefInput<$PrismaModel>;
     gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type EnumUserRoleFilter<$PrismaModel = never> = {
@@ -20220,12 +20454,6 @@ export namespace Prisma {
     none?: ElementWhereInput;
   };
 
-  export type MapListRelationFilter = {
-    every?: MapWhereInput;
-    some?: MapWhereInput;
-    none?: MapWhereInput;
-  };
-
   export type ActivityLogListRelationFilter = {
     every?: ActivityLogWhereInput;
     some?: ActivityLogWhereInput;
@@ -20241,10 +20469,6 @@ export namespace Prisma {
   };
 
   export type ElementOrderByRelationAggregateInput = {
-    _count?: SortOrder;
-  };
-
-  export type MapOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -20293,22 +20517,6 @@ export namespace Prisma {
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder;
     avatarId?: SortOrder;
-  };
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -20573,11 +20781,6 @@ export namespace Prisma {
     elementId?: SortOrder;
     x?: SortOrder;
     y?: SortOrder;
-  };
-
-  export type MapNullableScalarRelationFilter = {
-    is?: MapWhereInput | null;
-    isNot?: MapWhereInput | null;
   };
 
   export type SpaceNullableScalarRelationFilter = {
@@ -21024,6 +21227,30 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput;
   };
 
+  export type MapCreateNestedOneWithoutChildMapsInput = {
+    create?: XOR<
+      MapCreateWithoutChildMapsInput,
+      MapUncheckedCreateWithoutChildMapsInput
+    >;
+    connectOrCreate?: MapCreateOrConnectWithoutChildMapsInput;
+    connect?: MapWhereUniqueInput;
+  };
+
+  export type MapCreateNestedManyWithoutTemplateInput = {
+    create?:
+      | XOR<
+          MapCreateWithoutTemplateInput,
+          MapUncheckedCreateWithoutTemplateInput
+        >
+      | MapCreateWithoutTemplateInput[]
+      | MapUncheckedCreateWithoutTemplateInput[];
+    connectOrCreate?:
+      | MapCreateOrConnectWithoutTemplateInput
+      | MapCreateOrConnectWithoutTemplateInput[];
+    createMany?: MapCreateManyTemplateInputEnvelope;
+    connect?: MapWhereUniqueInput | MapWhereUniqueInput[];
+  };
+
   export type MessageCreateNestedManyWithoutMapInput = {
     create?:
       | XOR<MessageCreateWithoutMapInput, MessageUncheckedCreateWithoutMapInput>
@@ -21081,6 +21308,21 @@ export namespace Prisma {
       | MapSpaceCreateOrConnectWithoutMapInput[];
     createMany?: MapSpaceCreateManyMapInputEnvelope;
     connect?: MapSpaceWhereUniqueInput | MapSpaceWhereUniqueInput[];
+  };
+
+  export type MapUncheckedCreateNestedManyWithoutTemplateInput = {
+    create?:
+      | XOR<
+          MapCreateWithoutTemplateInput,
+          MapUncheckedCreateWithoutTemplateInput
+        >
+      | MapCreateWithoutTemplateInput[]
+      | MapUncheckedCreateWithoutTemplateInput[];
+    connectOrCreate?:
+      | MapCreateOrConnectWithoutTemplateInput
+      | MapCreateOrConnectWithoutTemplateInput[];
+    createMany?: MapCreateManyTemplateInputEnvelope;
+    connect?: MapWhereUniqueInput | MapWhereUniqueInput[];
   };
 
   export type MessageUncheckedCreateNestedManyWithoutMapInput = {
@@ -21185,6 +21427,53 @@ export namespace Prisma {
     >;
   };
 
+  export type MapUpdateOneWithoutChildMapsNestedInput = {
+    create?: XOR<
+      MapCreateWithoutChildMapsInput,
+      MapUncheckedCreateWithoutChildMapsInput
+    >;
+    connectOrCreate?: MapCreateOrConnectWithoutChildMapsInput;
+    upsert?: MapUpsertWithoutChildMapsInput;
+    disconnect?: MapWhereInput | boolean;
+    delete?: MapWhereInput | boolean;
+    connect?: MapWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        MapUpdateToOneWithWhereWithoutChildMapsInput,
+        MapUpdateWithoutChildMapsInput
+      >,
+      MapUncheckedUpdateWithoutChildMapsInput
+    >;
+  };
+
+  export type MapUpdateManyWithoutTemplateNestedInput = {
+    create?:
+      | XOR<
+          MapCreateWithoutTemplateInput,
+          MapUncheckedCreateWithoutTemplateInput
+        >
+      | MapCreateWithoutTemplateInput[]
+      | MapUncheckedCreateWithoutTemplateInput[];
+    connectOrCreate?:
+      | MapCreateOrConnectWithoutTemplateInput
+      | MapCreateOrConnectWithoutTemplateInput[];
+    upsert?:
+      | MapUpsertWithWhereUniqueWithoutTemplateInput
+      | MapUpsertWithWhereUniqueWithoutTemplateInput[];
+    createMany?: MapCreateManyTemplateInputEnvelope;
+    set?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    disconnect?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    delete?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    connect?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    update?:
+      | MapUpdateWithWhereUniqueWithoutTemplateInput
+      | MapUpdateWithWhereUniqueWithoutTemplateInput[];
+    updateMany?:
+      | MapUpdateManyWithWhereWithoutTemplateInput
+      | MapUpdateManyWithWhereWithoutTemplateInput[];
+    deleteMany?: MapScalarWhereInput | MapScalarWhereInput[];
+  };
+
   export type MessageUpdateManyWithoutMapNestedInput = {
     create?:
       | XOR<MessageCreateWithoutMapInput, MessageUncheckedCreateWithoutMapInput>
@@ -21246,6 +21535,14 @@ export namespace Prisma {
       | user_map_visitsScalarWhereInput[];
   };
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+  };
+
   export type MapElementUncheckedUpdateManyWithoutMapNestedInput = {
     create?:
       | XOR<
@@ -21300,6 +21597,34 @@ export namespace Prisma {
       | MapSpaceUpdateManyWithWhereWithoutMapInput
       | MapSpaceUpdateManyWithWhereWithoutMapInput[];
     deleteMany?: MapSpaceScalarWhereInput | MapSpaceScalarWhereInput[];
+  };
+
+  export type MapUncheckedUpdateManyWithoutTemplateNestedInput = {
+    create?:
+      | XOR<
+          MapCreateWithoutTemplateInput,
+          MapUncheckedCreateWithoutTemplateInput
+        >
+      | MapCreateWithoutTemplateInput[]
+      | MapUncheckedCreateWithoutTemplateInput[];
+    connectOrCreate?:
+      | MapCreateOrConnectWithoutTemplateInput
+      | MapCreateOrConnectWithoutTemplateInput[];
+    upsert?:
+      | MapUpsertWithWhereUniqueWithoutTemplateInput
+      | MapUpsertWithWhereUniqueWithoutTemplateInput[];
+    createMany?: MapCreateManyTemplateInputEnvelope;
+    set?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    disconnect?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    delete?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    connect?: MapWhereUniqueInput | MapWhereUniqueInput[];
+    update?:
+      | MapUpdateWithWhereUniqueWithoutTemplateInput
+      | MapUpdateWithWhereUniqueWithoutTemplateInput[];
+    updateMany?:
+      | MapUpdateManyWithWhereWithoutTemplateInput
+      | MapUpdateManyWithWhereWithoutTemplateInput[];
+    deleteMany?: MapScalarWhereInput | MapScalarWhereInput[];
   };
 
   export type MessageUncheckedUpdateManyWithoutMapNestedInput = {
@@ -21801,14 +22126,6 @@ export namespace Prisma {
     deleteMany?:
       | user_map_visitsScalarWhereInput
       | user_map_visitsScalarWhereInput[];
-  };
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
   };
 
   export type SpaceUncheckedUpdateManyWithoutOwnerNestedInput = {
@@ -22736,6 +23053,33 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>;
   };
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
+  };
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>;
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>;
@@ -22763,33 +23107,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>;
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>;
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string;
-  };
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
-  };
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
   };
 
   export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -23358,6 +23675,93 @@ export namespace Prisma {
     >;
   };
 
+  export type MapCreateWithoutChildMapsInput = {
+    name: string;
+    width: number;
+    height: number;
+    bgImg?: string | null;
+    tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    mapElements?: MapElementCreateNestedManyWithoutMapInput;
+    mapSpaces?: MapSpaceCreateNestedManyWithoutMapInput;
+    creator: UserCreateNestedOneWithoutCreatedMapsInput;
+    template?: MapCreateNestedOneWithoutChildMapsInput;
+    messages?: MessageCreateNestedManyWithoutMapInput;
+    user_map_visits?: user_map_visitsCreateNestedManyWithoutMapsInput;
+  };
+
+  export type MapUncheckedCreateWithoutChildMapsInput = {
+    id?: number;
+    name: string;
+    width: number;
+    height: number;
+    bgImg?: string | null;
+    tilemapUrl?: string | null;
+    creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
+    mapElements?: MapElementUncheckedCreateNestedManyWithoutMapInput;
+    mapSpaces?: MapSpaceUncheckedCreateNestedManyWithoutMapInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutMapInput;
+    user_map_visits?: user_map_visitsUncheckedCreateNestedManyWithoutMapsInput;
+  };
+
+  export type MapCreateOrConnectWithoutChildMapsInput = {
+    where: MapWhereUniqueInput;
+    create: XOR<
+      MapCreateWithoutChildMapsInput,
+      MapUncheckedCreateWithoutChildMapsInput
+    >;
+  };
+
+  export type MapCreateWithoutTemplateInput = {
+    name: string;
+    width: number;
+    height: number;
+    bgImg?: string | null;
+    tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    mapElements?: MapElementCreateNestedManyWithoutMapInput;
+    mapSpaces?: MapSpaceCreateNestedManyWithoutMapInput;
+    creator: UserCreateNestedOneWithoutCreatedMapsInput;
+    childMaps?: MapCreateNestedManyWithoutTemplateInput;
+    messages?: MessageCreateNestedManyWithoutMapInput;
+    user_map_visits?: user_map_visitsCreateNestedManyWithoutMapsInput;
+  };
+
+  export type MapUncheckedCreateWithoutTemplateInput = {
+    id?: number;
+    name: string;
+    width: number;
+    height: number;
+    bgImg?: string | null;
+    tilemapUrl?: string | null;
+    creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    mapElements?: MapElementUncheckedCreateNestedManyWithoutMapInput;
+    mapSpaces?: MapSpaceUncheckedCreateNestedManyWithoutMapInput;
+    childMaps?: MapUncheckedCreateNestedManyWithoutTemplateInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutMapInput;
+    user_map_visits?: user_map_visitsUncheckedCreateNestedManyWithoutMapsInput;
+  };
+
+  export type MapCreateOrConnectWithoutTemplateInput = {
+    where: MapWhereUniqueInput;
+    create: XOR<
+      MapCreateWithoutTemplateInput,
+      MapUncheckedCreateWithoutTemplateInput
+    >;
+  };
+
+  export type MapCreateManyTemplateInputEnvelope = {
+    data: MapCreateManyTemplateInput | MapCreateManyTemplateInput[];
+    skipDuplicates?: boolean;
+  };
+
   export type MessageCreateWithoutMapInput = {
     displayName: string;
     text: string;
@@ -23540,6 +23944,103 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutUserNestedInput;
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutUserNestedInput;
     user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutUsersNestedInput;
+  };
+
+  export type MapUpsertWithoutChildMapsInput = {
+    update: XOR<
+      MapUpdateWithoutChildMapsInput,
+      MapUncheckedUpdateWithoutChildMapsInput
+    >;
+    create: XOR<
+      MapCreateWithoutChildMapsInput,
+      MapUncheckedCreateWithoutChildMapsInput
+    >;
+    where?: MapWhereInput;
+  };
+
+  export type MapUpdateToOneWithWhereWithoutChildMapsInput = {
+    where?: MapWhereInput;
+    data: XOR<
+      MapUpdateWithoutChildMapsInput,
+      MapUncheckedUpdateWithoutChildMapsInput
+    >;
+  };
+
+  export type MapUpdateWithoutChildMapsInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    width?: IntFieldUpdateOperationsInput | number;
+    height?: IntFieldUpdateOperationsInput | number;
+    bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
+    tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    mapElements?: MapElementUpdateManyWithoutMapNestedInput;
+    mapSpaces?: MapSpaceUpdateManyWithoutMapNestedInput;
+    creator?: UserUpdateOneRequiredWithoutCreatedMapsNestedInput;
+    template?: MapUpdateOneWithoutChildMapsNestedInput;
+    messages?: MessageUpdateManyWithoutMapNestedInput;
+    user_map_visits?: user_map_visitsUpdateManyWithoutMapsNestedInput;
+  };
+
+  export type MapUncheckedUpdateWithoutChildMapsInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    width?: IntFieldUpdateOperationsInput | number;
+    height?: IntFieldUpdateOperationsInput | number;
+    bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
+    tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
+    mapElements?: MapElementUncheckedUpdateManyWithoutMapNestedInput;
+    mapSpaces?: MapSpaceUncheckedUpdateManyWithoutMapNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutMapNestedInput;
+    user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutMapsNestedInput;
+  };
+
+  export type MapUpsertWithWhereUniqueWithoutTemplateInput = {
+    where: MapWhereUniqueInput;
+    update: XOR<
+      MapUpdateWithoutTemplateInput,
+      MapUncheckedUpdateWithoutTemplateInput
+    >;
+    create: XOR<
+      MapCreateWithoutTemplateInput,
+      MapUncheckedCreateWithoutTemplateInput
+    >;
+  };
+
+  export type MapUpdateWithWhereUniqueWithoutTemplateInput = {
+    where: MapWhereUniqueInput;
+    data: XOR<
+      MapUpdateWithoutTemplateInput,
+      MapUncheckedUpdateWithoutTemplateInput
+    >;
+  };
+
+  export type MapUpdateManyWithWhereWithoutTemplateInput = {
+    where: MapScalarWhereInput;
+    data: XOR<
+      MapUpdateManyMutationInput,
+      MapUncheckedUpdateManyWithoutTemplateInput
+    >;
+  };
+
+  export type MapScalarWhereInput = {
+    AND?: MapScalarWhereInput | MapScalarWhereInput[];
+    OR?: MapScalarWhereInput[];
+    NOT?: MapScalarWhereInput | MapScalarWhereInput[];
+    id?: IntFilter<'Map'> | number;
+    name?: StringFilter<'Map'> | string;
+    width?: IntFilter<'Map'> | number;
+    height?: IntFilter<'Map'> | number;
+    bgImg?: StringNullableFilter<'Map'> | string | null;
+    tilemapUrl?: StringNullableFilter<'Map'> | string | null;
+    creatorId?: IntFilter<'Map'> | number;
+    isTemplate?: BoolFilter<'Map'> | boolean;
+    accessCode?: StringNullableFilter<'Map'> | string | null;
+    templateId?: IntNullableFilter<'Map'> | number | null;
   };
 
   export type MessageUpsertWithWhereUniqueWithoutMapInput = {
@@ -23752,8 +24253,12 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
     mapElements?: MapElementCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceCreateNestedManyWithoutMapInput;
+    template?: MapCreateNestedOneWithoutChildMapsInput;
+    childMaps?: MapCreateNestedManyWithoutTemplateInput;
     messages?: MessageCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsCreateNestedManyWithoutMapsInput;
   };
@@ -23765,8 +24270,12 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
     mapElements?: MapElementUncheckedCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceUncheckedCreateNestedManyWithoutMapInput;
+    childMaps?: MapUncheckedCreateNestedManyWithoutTemplateInput;
     messages?: MessageUncheckedCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsUncheckedCreateNestedManyWithoutMapsInput;
   };
@@ -24047,19 +24556,6 @@ export namespace Prisma {
       MapUpdateManyMutationInput,
       MapUncheckedUpdateManyWithoutCreatorInput
     >;
-  };
-
-  export type MapScalarWhereInput = {
-    AND?: MapScalarWhereInput | MapScalarWhereInput[];
-    OR?: MapScalarWhereInput[];
-    NOT?: MapScalarWhereInput | MapScalarWhereInput[];
-    id?: IntFilter<'Map'> | number;
-    name?: StringFilter<'Map'> | string;
-    width?: IntFilter<'Map'> | number;
-    height?: IntFilter<'Map'> | number;
-    bgImg?: StringNullableFilter<'Map'> | string | null;
-    tilemapUrl?: StringNullableFilter<'Map'> | string | null;
-    creatorId?: IntFilter<'Map'> | number;
   };
 
   export type MessageUpsertWithWhereUniqueWithoutUserInput = {
@@ -24558,8 +25054,12 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
     mapSpaces?: MapSpaceCreateNestedManyWithoutMapInput;
     creator: UserCreateNestedOneWithoutCreatedMapsInput;
+    template?: MapCreateNestedOneWithoutChildMapsInput;
+    childMaps?: MapCreateNestedManyWithoutTemplateInput;
     messages?: MessageCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsCreateNestedManyWithoutMapsInput;
   };
@@ -24572,7 +25072,11 @@ export namespace Prisma {
     bgImg?: string | null;
     tilemapUrl?: string | null;
     creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
     mapSpaces?: MapSpaceUncheckedCreateNestedManyWithoutMapInput;
+    childMaps?: MapUncheckedCreateNestedManyWithoutTemplateInput;
     messages?: MessageUncheckedCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsUncheckedCreateNestedManyWithoutMapsInput;
   };
@@ -24650,8 +25154,12 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
     mapSpaces?: MapSpaceUpdateManyWithoutMapNestedInput;
     creator?: UserUpdateOneRequiredWithoutCreatedMapsNestedInput;
+    template?: MapUpdateOneWithoutChildMapsNestedInput;
+    childMaps?: MapUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUpdateManyWithoutMapsNestedInput;
   };
@@ -24664,7 +25172,11 @@ export namespace Prisma {
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
     creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
     mapSpaces?: MapSpaceUncheckedUpdateManyWithoutMapNestedInput;
+    childMaps?: MapUncheckedUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutMapsNestedInput;
   };
@@ -24675,8 +25187,12 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
     mapElements?: MapElementCreateNestedManyWithoutMapInput;
     creator: UserCreateNestedOneWithoutCreatedMapsInput;
+    template?: MapCreateNestedOneWithoutChildMapsInput;
+    childMaps?: MapCreateNestedManyWithoutTemplateInput;
     messages?: MessageCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsCreateNestedManyWithoutMapsInput;
   };
@@ -24689,7 +25205,11 @@ export namespace Prisma {
     bgImg?: string | null;
     tilemapUrl?: string | null;
     creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
     mapElements?: MapElementUncheckedCreateNestedManyWithoutMapInput;
+    childMaps?: MapUncheckedCreateNestedManyWithoutTemplateInput;
     messages?: MessageUncheckedCreateNestedManyWithoutMapInput;
     user_map_visits?: user_map_visitsUncheckedCreateNestedManyWithoutMapsInput;
   };
@@ -24761,8 +25281,12 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
     mapElements?: MapElementUpdateManyWithoutMapNestedInput;
     creator?: UserUpdateOneRequiredWithoutCreatedMapsNestedInput;
+    template?: MapUpdateOneWithoutChildMapsNestedInput;
+    childMaps?: MapUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUpdateManyWithoutMapsNestedInput;
   };
@@ -24775,7 +25299,11 @@ export namespace Prisma {
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
     creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
     mapElements?: MapElementUncheckedUpdateManyWithoutMapNestedInput;
+    childMaps?: MapUncheckedUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutMapsNestedInput;
   };
@@ -24975,9 +25503,13 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
     mapElements?: MapElementCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceCreateNestedManyWithoutMapInput;
     creator: UserCreateNestedOneWithoutCreatedMapsInput;
+    template?: MapCreateNestedOneWithoutChildMapsInput;
+    childMaps?: MapCreateNestedManyWithoutTemplateInput;
     user_map_visits?: user_map_visitsCreateNestedManyWithoutMapsInput;
   };
 
@@ -24989,8 +25521,12 @@ export namespace Prisma {
     bgImg?: string | null;
     tilemapUrl?: string | null;
     creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
     mapElements?: MapElementUncheckedCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceUncheckedCreateNestedManyWithoutMapInput;
+    childMaps?: MapUncheckedCreateNestedManyWithoutTemplateInput;
     user_map_visits?: user_map_visitsUncheckedCreateNestedManyWithoutMapsInput;
   };
 
@@ -25102,9 +25638,13 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
     mapElements?: MapElementUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUpdateManyWithoutMapNestedInput;
     creator?: UserUpdateOneRequiredWithoutCreatedMapsNestedInput;
+    template?: MapUpdateOneWithoutChildMapsNestedInput;
+    childMaps?: MapUpdateManyWithoutTemplateNestedInput;
     user_map_visits?: user_map_visitsUpdateManyWithoutMapsNestedInput;
   };
 
@@ -25116,8 +25656,12 @@ export namespace Prisma {
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
     creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
     mapElements?: MapElementUncheckedUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUncheckedUpdateManyWithoutMapNestedInput;
+    childMaps?: MapUncheckedUpdateManyWithoutTemplateNestedInput;
     user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutMapsNestedInput;
   };
 
@@ -25233,9 +25777,13 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
     mapElements?: MapElementCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceCreateNestedManyWithoutMapInput;
     creator: UserCreateNestedOneWithoutCreatedMapsInput;
+    template?: MapCreateNestedOneWithoutChildMapsInput;
+    childMaps?: MapCreateNestedManyWithoutTemplateInput;
     messages?: MessageCreateNestedManyWithoutMapInput;
   };
 
@@ -25247,8 +25795,12 @@ export namespace Prisma {
     bgImg?: string | null;
     tilemapUrl?: string | null;
     creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
     mapElements?: MapElementUncheckedCreateNestedManyWithoutMapInput;
     mapSpaces?: MapSpaceUncheckedCreateNestedManyWithoutMapInput;
+    childMaps?: MapUncheckedCreateNestedManyWithoutTemplateInput;
     messages?: MessageUncheckedCreateNestedManyWithoutMapInput;
   };
 
@@ -25327,9 +25879,13 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
     mapElements?: MapElementUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUpdateManyWithoutMapNestedInput;
     creator?: UserUpdateOneRequiredWithoutCreatedMapsNestedInput;
+    template?: MapUpdateOneWithoutChildMapsNestedInput;
+    childMaps?: MapUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUpdateManyWithoutMapNestedInput;
   };
 
@@ -25341,8 +25897,12 @@ export namespace Prisma {
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
     creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
     mapElements?: MapElementUncheckedUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUncheckedUpdateManyWithoutMapNestedInput;
+    childMaps?: MapUncheckedUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutMapNestedInput;
   };
 
@@ -25540,6 +26100,18 @@ export namespace Prisma {
     y: number;
   };
 
+  export type MapCreateManyTemplateInput = {
+    id?: number;
+    name: string;
+    width: number;
+    height: number;
+    bgImg?: string | null;
+    tilemapUrl?: string | null;
+    creatorId: number;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+  };
+
   export type MessageCreateManyMapInput = {
     id?: number;
     spaceId?: number | null;
@@ -25593,6 +26165,51 @@ export namespace Prisma {
     spaceId?: IntFieldUpdateOperationsInput | number;
     x?: IntFieldUpdateOperationsInput | number;
     y?: IntFieldUpdateOperationsInput | number;
+  };
+
+  export type MapUpdateWithoutTemplateInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    width?: IntFieldUpdateOperationsInput | number;
+    height?: IntFieldUpdateOperationsInput | number;
+    bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
+    tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    mapElements?: MapElementUpdateManyWithoutMapNestedInput;
+    mapSpaces?: MapSpaceUpdateManyWithoutMapNestedInput;
+    creator?: UserUpdateOneRequiredWithoutCreatedMapsNestedInput;
+    childMaps?: MapUpdateManyWithoutTemplateNestedInput;
+    messages?: MessageUpdateManyWithoutMapNestedInput;
+    user_map_visits?: user_map_visitsUpdateManyWithoutMapsNestedInput;
+  };
+
+  export type MapUncheckedUpdateWithoutTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    width?: IntFieldUpdateOperationsInput | number;
+    height?: IntFieldUpdateOperationsInput | number;
+    bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
+    tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    mapElements?: MapElementUncheckedUpdateManyWithoutMapNestedInput;
+    mapSpaces?: MapSpaceUncheckedUpdateManyWithoutMapNestedInput;
+    childMaps?: MapUncheckedUpdateManyWithoutTemplateNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutMapNestedInput;
+    user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutMapsNestedInput;
+  };
+
+  export type MapUncheckedUpdateManyWithoutTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    width?: IntFieldUpdateOperationsInput | number;
+    height?: IntFieldUpdateOperationsInput | number;
+    bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
+    tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    creatorId?: IntFieldUpdateOperationsInput | number;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
   };
 
   export type MessageUpdateWithoutMapInput = {
@@ -25671,6 +26288,9 @@ export namespace Prisma {
     height: number;
     bgImg?: string | null;
     tilemapUrl?: string | null;
+    isTemplate?: boolean;
+    accessCode?: string | null;
+    templateId?: number | null;
   };
 
   export type MessageCreateManyUserInput = {
@@ -25786,8 +26406,12 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
     mapElements?: MapElementUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUpdateManyWithoutMapNestedInput;
+    template?: MapUpdateOneWithoutChildMapsNestedInput;
+    childMaps?: MapUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUpdateManyWithoutMapsNestedInput;
   };
@@ -25799,8 +26423,12 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
     mapElements?: MapElementUncheckedUpdateManyWithoutMapNestedInput;
     mapSpaces?: MapSpaceUncheckedUpdateManyWithoutMapNestedInput;
+    childMaps?: MapUncheckedUpdateManyWithoutTemplateNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutMapNestedInput;
     user_map_visits?: user_map_visitsUncheckedUpdateManyWithoutMapsNestedInput;
   };
@@ -25812,6 +26440,9 @@ export namespace Prisma {
     height?: IntFieldUpdateOperationsInput | number;
     bgImg?: NullableStringFieldUpdateOperationsInput | string | null;
     tilemapUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    isTemplate?: BoolFieldUpdateOperationsInput | boolean;
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null;
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null;
   };
 
   export type MessageUpdateWithoutUserInput = {

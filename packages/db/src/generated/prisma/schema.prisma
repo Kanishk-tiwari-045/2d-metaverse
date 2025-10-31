@@ -43,9 +43,14 @@ model Map {
   bgImg           String?           @map("bg_img") // Background image URL
   tilemapUrl      String?           @map("tilemap_url") // Tiled JSON map file URL
   creatorId       Int               @map("creator_id")
+  isTemplate      Boolean           @default(false) @map("is_template")
+  accessCode      String?           @unique @map("access_code")
+  templateId      Int?              @map("template_id")
   mapElements     MapElement[]
   mapSpaces       MapSpace[]
   creator         User              @relation("MapCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  template        Map?              @relation("MapTemplate", fields: [templateId], references: [id], onDelete: SetNull)
+  childMaps       Map[]             @relation("MapTemplate")
   messages        Message[]
   user_map_visits user_map_visits[]
 

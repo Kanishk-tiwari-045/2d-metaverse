@@ -34,9 +34,6 @@ CREATE TABLE "maps" (
     "bg_img" TEXT,
     "tilemap_url" TEXT,
     "creator_id" INTEGER NOT NULL,
-    "is_template" BOOLEAN NOT NULL DEFAULT false,
-    "access_code" TEXT,
-    "template_id" INTEGER,
 
     CONSTRAINT "maps_pkey" PRIMARY KEY ("id")
 );
@@ -135,9 +132,6 @@ CREATE TABLE "user_map_visits" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "maps_access_code_key" ON "maps"("access_code");
-
--- CreateIndex
 CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 
 -- CreateIndex
@@ -160,9 +154,6 @@ ALTER TABLE "elements" ADD CONSTRAINT "elements_creator_id_fkey" FOREIGN KEY ("c
 
 -- AddForeignKey
 ALTER TABLE "maps" ADD CONSTRAINT "maps_creator_id_fkey" FOREIGN KEY ("creator_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "maps" ADD CONSTRAINT "maps_template_id_fkey" FOREIGN KEY ("template_id") REFERENCES "maps"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_avatar_id_fkey" FOREIGN KEY ("avatar_id") REFERENCES "avatars"("id") ON DELETE SET NULL ON UPDATE CASCADE;
