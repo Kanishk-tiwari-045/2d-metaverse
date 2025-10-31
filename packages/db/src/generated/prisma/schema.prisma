@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Avatar {
+  id         Int     @id @default(autoincrement())
+  imageUrl   String  @map("image_url")
+  name       String  @db.VarChar(255)
+  avatarIdle String? @map("avatar_idle") // URL for idle animation spritesheet
+  avatarRun  String? @map("avatar_run") // URL for run animation spritesheet
+  creatorId  Int     @map("creator_id")
+  creator    User    @relation("AvatarCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  users      User[]  @relation("UserAvatar")
+
+  @@map("avatars")
+}
+
+model Element {
+  id            Int            @id @default(autoincrement())
+  width         Int
+  height        Int
+  imageUrl      String         @map("image_url")
+  isStatic      Boolean        @default(false) @map("is_static")
+  creatorId     Int            @map("creator_id")
+  creator       User           @relation("ElementCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  mapElements   MapElement[]
+  spaceElements SpaceElement[]
+
+  @@map("elements")
+}
+
+model Map {
+  id          Int               @id @default(autoincrement())
+  name        String            @db.VarChar(255)
+  width       Int
+  height      Int
+  bgImg       String?           @map("bg_img") // Background image URL
+  tilemapUrl  String?           @map("tilemap_url") // Tiled JSON map file URL
+  creatorId   Int               @map("creator_id")
+  isTemplate  Boolean           @default(false) @map("is_template")
+  accessCode  String?           @unique @map("access_code")
+  templateId  Int?              @map("template_id")
+  creator     User              @relation("MapCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  template    Map?              @relation("MapTemplate", fields: [templateId], references: [id], onDelete: SetNull)
+  childMaps   Map[]             @relation("MapTemplate")
+  mapElements MapElement[]
+  mapSpaces   MapSpace[]
+  messages    Message[]
+  userVisits  user_map_visits[]
+
+  @@map("maps")
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  username        String            @unique @db.VarChar(255)
+  password        String
+  avatarId        Int?              @map("avatar_id")
+  avatarName      String?           @map("avatar_name") @db.VarChar(255)
+  role            UserRole          @default(user)
+  lastLoginAt     DateTime?         @map("last_login_at")
+  createdAt       DateTime          @default(now()) @map("created_at")
+  avatar          Avatar?           @relation("UserAvatar", fields: [avatarId], references: [id], onDelete: SetNull)
+  spaces          Space[]           @relation("SpaceOwner")
+  createdAvatars  Avatar[]          @relation("AvatarCreator")
+  createdElements Element[]         @relation("ElementCreator")
+  createdMaps     Map[]             @relation("MapCreator")
+  messages        Message[]
+  activityLogs    ActivityLog[]
+  user_map_visits user_map_visits[]
+
+  @@map("users")
+}
+
+model ActivityLog {
+  id     Int      @id @default(autoincrement())
+  userId Int      @map("user_id")
+  date   DateTime @db.Date
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId, date])
+  @@map("activity_logs")
+}
+
+model Space {
+  id         Int            @id @default(autoincrement())
+  name       String         @db.VarChar(255)
+  width      Int
+  height     Int
+  thumbnail  String?
+  bgImg      String?        @map("bg_img") // Background image URL
+  tilemapUrl String?        @map("tilemap_url") // Tiled JSON map file URL  
+  ownerId    Int            @map("owner_id")
+  mapSpaces  MapSpace[]
+  messages   Message[]
+  elements   SpaceElement[]
+  owner      User           @relation("SpaceOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@map("spaces")
+}
+
+model MapElement {
+  id        Int     @id @default(autoincrement())
+  mapId     Int     @map("map_id")
+  elementId Int     @map("element_id")
+  x         Int
+  y         Int
+  element   Element @relation(fields: [elementId], references: [id], onDelete: Cascade)
+  map       Map     @relation(fields: [mapId], references: [id], onDelete: Cascade)
+
+  @@map("map_elements")
+}
+
+model MapSpace {
+  id      Int   @id @default(autoincrement())
+  mapId   Int   @map("map_id")
+  spaceId Int   @map("space_id")
+  x       Int
+  y       Int
+  map     Map   @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  space   Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+
+  @@unique([mapId, spaceId])
+  @@map("map_spaces")
+}
+
+model SpaceElement {
+  id        Int     @id @default(autoincrement())
+  spaceId   Int     @map("space_id")
+  elementId Int     @map("element_id")
+  x         Int
+  y         Int
+  element   Element @relation(fields: [elementId], references: [id], onDelete: Cascade)
+  space     Space   @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+
+  @@map("space_elements")
+}
+
+model Message {
+  id          Int      @id @default(autoincrement())
+  spaceId     Int?     @map("space_id")
+  userId      Int      @map("user_id")
+  displayName String   @map("display_name") @db.VarChar(255)
+  text        String   @db.VarChar(2000)
+  createdAt   DateTime @default(now()) @map("created_at")
+  mapId       Int?     @map("map_id")
+  map         Map?     @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  space       Space?   @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model user_map_visits {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  map_id     Int
+  visited_at DateTime @default(now())
+  maps       Map      @relation(fields: [map_id], references: [id], onDelete: Cascade)
+  users      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, map_id])
+}
+
+enum UserRole {
+  admin
+  user
+}
