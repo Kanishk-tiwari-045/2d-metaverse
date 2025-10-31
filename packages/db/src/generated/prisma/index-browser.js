@@ -142,9 +142,6 @@ exports.Prisma.MapScalarFieldEnum = {
   bgImg: 'bgImg',
   tilemapUrl: 'tilemapUrl',
   creatorId: 'creatorId',
-  isTemplate: 'isTemplate',
-  accessCode: 'accessCode',
-  templateId: 'templateId',
 };
 
 exports.Prisma.UserScalarFieldEnum = {
